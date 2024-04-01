@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -66,7 +67,10 @@ const RegisterPage = () => {
           Register
         </button>
         <div className="my-4 text-center text-gray-500">or</div>
-        <button className="flex gap-4 justify-center">
+        <button
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="flex gap-4 justify-center"
+        >
           <FcGoogle className="w-[24px] h-[24px]" />
           Login with Google
         </button>
