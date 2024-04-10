@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import UserTabs from "@/components/UserTabs";
 const ProfilePage = () => {
   const session = useSession();
   const [userName, setUserName] = useState("");
@@ -12,6 +12,8 @@ const ProfilePage = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [pincode, setPincode] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [profileFetched, setProfileFetched] = useState(false);
   const { status } = session;
 
   useEffect(() => {
@@ -23,6 +25,8 @@ const ProfilePage = () => {
           setAddress(data.address);
           setCity(data.city);
           setPincode(data.pincode);
+          setIsAdmin(data.admin);
+          setProfileFetched(true);
         });
       });
     }
@@ -52,7 +56,7 @@ const ProfilePage = () => {
     });
   };
 
-  if (status === "loading") {
+  if (status === "loading" || !profileFetched) {
     return "Loading...";
   }
 
@@ -64,29 +68,19 @@ const ProfilePage = () => {
   // const userImage = "";
   return (
     <section className="mt-8">
-      <h1 className="text-center text-primary text-4xl mb-4">Your Profile</h1>
-      <div className="max-w-md mx-auto">
+      <UserTabs isAdmin={isAdmin} />
+      <div className="max-w-md mx-auto mt-8">
         <div className="flex gap-4">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
-              {userImage && (
-                <Image
-                  className="rounded-full w-full h-full mb-1"
-                  src={userImage}
-                  width={250}
-                  height={250}
-                  alt="avatar"
-                />
-              )}
-              {!userImage && (
-                <Image
-                  className="rounded-full w-full h-full mb-1"
-                  src={"/avatar.png"}
-                  width={80}
-                  height={80}
-                  alt="avatar"
-                />
-              )}
+              <Image
+                className="rounded-full w-full h-full mb-1"
+                src={userImage}
+                width={250}
+                height={250}
+                alt="avatar"
+              />
+              {/* <button type="button">Edit</button> */}
             </div>
           </div>
           <form className="grow" onSubmit={handleProfileUpdate}>
