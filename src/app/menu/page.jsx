@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useProfile } from "../../components/UseProfile";
 import UserTabs from "../../components/UserTabs";
+
 const MenuPage = () => {
   const { loading, data } = useProfile();
   const [name, setName] = useState("");
