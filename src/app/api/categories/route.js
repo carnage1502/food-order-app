@@ -15,7 +15,7 @@ export async function PUT(req) {
   return Response.json(true);
 }
 
-export async function GET(req) {
+export async function GET() {
   mongoose.connect(process.env.MONGO_URL);
   return Response.json(await Category.find());
 }

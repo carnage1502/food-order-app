@@ -2,6 +2,7 @@ import Image from "next/image";
 import { imageDb } from "@/libs/fireBase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
 
 export default function EditImage({ link, setLink }) {
   const handleFileChange = async (e) => {
@@ -9,11 +10,17 @@ export default function EditImage({ link, setLink }) {
     if (!files) return;
     const fileName = `${uuidv4()}`;
     const imageRef = ref(imageDb, `files/${fileName}`);
+    let uploadingToast;
     try {
+      uploadingToast = toast.loading("Uploading...");
       await uploadBytes(imageRef, files);
       const url = await getDownloadURL(imageRef);
       setLink(url);
+      toast.dismiss(uploadingToast);
+      toast.success("Upload completed...");
     } catch (error) {
+      toast.dismiss(uploadingToast);
+      toast.error("Error");
       console.error(error);
     }
   };

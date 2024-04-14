@@ -74,7 +74,10 @@ const ProfilePage = () => {
       <div className="max-w-md mx-auto mt-8">
         <div className="flex gap-4">
           <div>
-            <div className="p-2 rounded-lg relative max-w-[120px]">
+            <div
+              className="p-2 rounded-lg relative max-w-[120px]"
+              style={{ gridTemplateColumns: ".3fr .7fr" }}
+            >
               <EditImage link={image} setLink={setImage} />
             </div>
           </div>
