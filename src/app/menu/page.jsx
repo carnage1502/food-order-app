@@ -21,7 +21,7 @@ const MenuPage = () => {
           className="grid gap-4 items-start"
           style={{ gridTemplateColumns: ".3fr .7fr" }}
         >
-          <div></div>
+          <div>image</div>
           <div className="grow">
             <label>Item name</label>
             <input

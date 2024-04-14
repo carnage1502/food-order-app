@@ -1,13 +1,11 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import UserTabs from "@/components/UserTabs";
-import { imageDb } from "@/libs/fireBase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
+import EditImage from "@/components/EditImage";
+
 const ProfilePage = () => {
   const session = useSession();
   const [userName, setUserName] = useState("");
@@ -62,20 +60,6 @@ const ProfilePage = () => {
     });
   };
 
-  const handleFileChange = async (e) => {
-    const files = e.target.files[0];
-    if (!files) return;
-    const fileName = `${uuidv4()}`;
-    const imageRef = ref(imageDb, `files/${fileName}`);
-    try {
-      await uploadBytes(imageRef, files);
-      const url = await getDownloadURL(imageRef);
-      setImage(url);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   if (status === "loading" || !profileFetched) {
     return "Loading...";
   }
@@ -91,25 +75,7 @@ const ProfilePage = () => {
         <div className="flex gap-4">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
-              {image && (
-                <Image
-                  className="rounded-full w-full h-full mb-1"
-                  src={image}
-                  width={250}
-                  height={250}
-                  alt="avatar"
-                />
-              )}
-              <label>
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-                <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
-                  Edit
-                </span>
-              </label>
+              <EditImage link={image} setLink={setImage} />
             </div>
           </div>
           <form className="grow" onSubmit={handleProfileUpdate}>

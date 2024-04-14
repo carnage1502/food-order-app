@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { Category } from "../../models/Category";
-import mongoose from "mongoose";
 
 export async function POST(req) {
   mongoose.connect(process.env.MONGO_URL);
