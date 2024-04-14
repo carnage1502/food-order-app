@@ -17,8 +17,11 @@ const UserTabs = ({ isAdmin }) => {
           >
             Categories
           </Link>
-          <Link className={path === "/menu" ? "active" : ""} href={"/menu"}>
-            Menu
+          <Link
+            className={path.includes("menu") ? "active" : ""}
+            href={"/menu"}
+          >
+            Menu Items
           </Link>
           <Link className={path === "/users" ? "active" : ""} href={"/users"}>
             Users

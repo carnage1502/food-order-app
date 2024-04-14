@@ -83,7 +83,7 @@ const CategoriesPage = () => {
         {categories?.length > 0 &&
           categories.map((c) => (
             <button
-              className="bg-gray-200 rounded-xl p-2 px-4 flex gap-1 cursor-pointer mb-1"
+              className="rounded-xl p-2 px-4 flex gap-1 cursor-pointer mb-1"
               key={c._id}
               onClick={() => {
                 setEditedCategory(c);
