@@ -1,16 +1,31 @@
 "use client";
 import { useState } from "react";
 import EditImage from "../components/EditImage";
+import React from "react";
+import MenuItemPriceProps from "@/components/MenuItemPriceProps";
 
 const MenuItemForm = ({ onSubmit, menuItem }) => {
   const [image, setImage] = useState(menuItem?.image || "");
   const [name, setName] = useState(menuItem?.name || "");
   const [description, setDescription] = useState(menuItem?.description || "");
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
+  const [sizes, setSizes] = useState(menuItem?.sizes || []);
+  const [extraIngredientsPrice, setExtraIngredientsPrice] = useState(
+    menuItem?.extraIngredientsPrice || []
+  );
 
   return (
     <form
-      onSubmit={(e) => onSubmit(e, { image, name, description, basePrice })}
+      onSubmit={(e) =>
+        onSubmit(e, {
+          image,
+          name,
+          description,
+          basePrice,
+          sizes,
+          extraIngredientsPrice,
+        })
+      }
       className="mt-8 max-w-md mx-auto"
     >
       <div
@@ -38,6 +53,19 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
             type="text"
             value={basePrice}
             onChange={(e) => setBasePrice(e.target.value)}
+          />
+
+          <MenuItemPriceProps
+            name={"Sizes"}
+            addLabel={"Add item size"}
+            props={sizes}
+            setProps={setSizes}
+          />
+          <MenuItemPriceProps
+            name={"Extra Ingredients"}
+            addLabel={"Add ingredients prices"}
+            props={extraIngredientsPrice}
+            setProps={setExtraIngredientsPrice}
           />
           <button type="submit">Save</button>
         </div>
