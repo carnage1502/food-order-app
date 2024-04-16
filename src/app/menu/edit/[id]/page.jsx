@@ -7,6 +7,7 @@ import Link from "next/link";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 import { redirect, useParams } from "next/navigation";
 import MenuItemForm from "@/components/MenuItemForm";
+import DeleteBtn from "@/components/DeleteBtn";
 
 const EditMenuItemPage = () => {
   const { id } = useParams();
@@ -45,6 +46,22 @@ const EditMenuItemPage = () => {
     setRedirectToItems(true);
   };
 
+  const handleDeleteBtn = async () => {
+    const promise = new Promise(async (resolve, reject) => {
+      const response = await fetch("/api/menu-items?_id=" + id, {
+        method: "DELETE",
+      });
+      if (response.ok) resolve();
+      else reject();
+    });
+    await toast.promise(promise, {
+      loading: "Deleting...",
+      success: "Deleted!",
+      error: "Error!",
+    });
+    setRedirectToItems(true);
+  };
+
   if (redirectToItems) {
     return redirect("/menu");
   }
@@ -54,13 +71,18 @@ const EditMenuItemPage = () => {
   return (
     <section className="mt-8">
       <UserTabs isAdmin={true} />
-      <div className="max-w-md mx-auto mt-8">
+      <div className="max-w-2xl mx-auto mt-8">
         <Link href={"/menu"} className="button">
           <FaRegArrowAltCircleLeft className="mt-1" />
           <span>Show all menu items</span>
         </Link>
       </div>
       <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
+      <div className="max-w-md mx-auto mt-2">
+        <div className="max-w-xs ml-auto pl-4">
+          <DeleteBtn label="Delete this menu item" onDelete={handleDeleteBtn} />
+        </div>
+      </div>
     </section>
   );
 };
