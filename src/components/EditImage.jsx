@@ -31,8 +31,8 @@ export default function EditImage({ link, setLink }) {
         <Image
           className="rounded-lg w-full h-full mb-1"
           src={link}
-          width={250}
-          height={250}
+          width={100}
+          height={100}
           alt={"avatar"}
         />
       )}

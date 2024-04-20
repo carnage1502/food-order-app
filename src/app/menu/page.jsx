@@ -42,14 +42,14 @@ const MenuPage = () => {
               >
                 <div className="relative">
                   <Image
-                    className="rounded-md"
+                    className="rounded-md aspect-square"
                     src={item.image}
                     alt="item image"
                     width={200}
                     height={200}
                   />
                 </div>
-                <div className="text-center">{item.name}</div>
+                <div className="text-center mt-2">{item.name}</div>
               </Link>
             ))}
         </div>
